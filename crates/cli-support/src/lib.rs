@@ -40,6 +40,7 @@ pub struct Bindgen {
     encode_into: EncodeInto,
     split_linked_modules: bool,
     symbol_dispose: bool,
+    omit_fetch_module: bool,
 }
 
 pub struct Output {
@@ -108,6 +109,7 @@ impl Bindgen {
             omit_default_module_path: true,
             split_linked_modules: false,
             symbol_dispose,
+            omit_fetch_module: false,
         }
     }
 
@@ -278,6 +280,11 @@ impl Bindgen {
 
     pub fn omit_default_module_path(&mut self, omit_default_module_path: bool) -> &mut Bindgen {
         self.omit_default_module_path = omit_default_module_path;
+        self
+    }
+
+    pub fn omit_fetch_module(&mut self, omit_fetch_module: bool) -> &mut Bindgen {
+        self.omit_fetch_module = omit_fetch_module;
         self
     }
 

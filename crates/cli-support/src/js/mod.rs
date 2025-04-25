@@ -1009,10 +1009,7 @@ __wbg_set_wasm(wasm);"
 
                     {default_module_path}
                     const imports = __wbg_get_imports();
-
-                    if (typeof module_or_path === 'string' || (typeof Request === 'function' && module_or_path instanceof Request) || (typeof URL === 'function' && module_or_path instanceof URL)) {{
-                        module_or_path = fetch(module_or_path);
-                    }}
+                    {default_fetch_module}
 
                     __wbg_init_memory(imports{init_memory_arg});
 
@@ -1050,6 +1047,14 @@ __wbg_set_wasm(wasm);"
                 )
             } else {
                 String::new()
+            },
+            default_fetch_module = if !self.config.omit_fetch_module {
+                "
+                if (typeof module_or_path === 'string' || (typeof Request === 'function' && module_or_path instanceof Request) || (typeof URL === 'function' && module_or_path instanceof URL)) {{
+                    module_or_path = fetch(module_or_path);
+                }}"
+            } else {
+                ""
             },
         );
 
